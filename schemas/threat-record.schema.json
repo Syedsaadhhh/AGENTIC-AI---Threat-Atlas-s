@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Syedsaadhhh/AGENTIC-AI---Threat-Atlas-s/schemas/threat-record.schema.json",
+  "title": "Agentic Threat Atlas record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "title",
+    "status",
+    "evidence_level",
+    "risk_band",
+    "first_published",
+    "last_reviewed",
+    "summary",
+    "affected_layers",
+    "trust_boundaries",
+    "preconditions",
+    "attack_path",
+    "security_impact",
+    "observable_signals",
+    "controls",
+    "limitations",
+    "open_questions",
+    "references"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^ATA-[0-9]{3}$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 8
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "active", "contested", "retired"]
+    },
+    "evidence_level": {
+      "type": "string",
+      "enum": ["E0", "E1", "E2", "E3", "E4"]
+    },
+    "risk_band": {
+      "type": "string",
+      "enum": ["context-dependent", "low", "moderate", "high", "critical"]
+    },
+    "first_published": {
+      "type": "string",
+      "format": "date"
+    },
+    "last_reviewed": {
+      "type": "string",
+      "format": "date"
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 40
+    },
+    "affected_layers": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "instruction",
+          "identity",
+          "data",
+          "planning",
+          "tool",
+          "memory",
+          "orchestration",
+          "runtime",
+          "supply-chain",
+          "oversight",
+          "recovery"
+        ]
+      }
+    },
+    "trust_boundaries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 5}
+    },
+    "preconditions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 10}
+    },
+    "attack_path": {
+      "type": "array",
+      "minItems": 2,
+      "items": {"type": "string", "minLength": 10}
+    },
+    "security_impact": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "confidentiality",
+          "integrity",
+          "availability",
+          "authorization",
+          "privacy",
+          "accountability"
+        ]
+      }
+    },
+    "observable_signals": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 10}
+    },
+    "controls": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^CTL-[0-9]{3}$"}
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 10}
+    },
+    "open_questions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 10}
+    },
+    "references": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^SRC-[0-9]{3}$"}
+    }
+  }
+}
