@@ -1,0 +1,75 @@
+{
+  "id": "ATA-002",
+  "title": "Tool authority drift after task decomposition",
+  "status": "active",
+  "evidence_level": "E1",
+  "risk_band": "context-dependent",
+  "first_published": "2026-07-14",
+  "last_reviewed": "2026-07-14",
+  "summary": "A narrow user request is decomposed into subtasks that inherit broader tools, credentials, data reach, or side effects than the original task requires.",
+  "affected_layers": [
+    "identity",
+    "planning",
+    "tool",
+    "orchestration",
+    "oversight"
+  ],
+  "trust_boundaries": [
+    "user intent to planner",
+    "planner to delegated subtask",
+    "policy gate to tool broker",
+    "tool broker to external service"
+  ],
+  "preconditions": [
+    "The system can decompose a user request into one or more intermediate tasks.",
+    "Subtasks inherit a shared session, service account, broad token, or unrestricted tool catalog.",
+    "Permission checks focus on whether a tool is generally available rather than whether this action needs it.",
+    "The system can introduce new targets or operations without a fresh approval decision."
+  ],
+  "attack_path": [
+    "The user authorizes a bounded outcome such as reading, summarizing, checking, or preparing a draft.",
+    "The planner creates an intermediate step that is broader than the requested outcome.",
+    "The subtask receives credentials or tools that can affect unrelated resources.",
+    "The system treats inherited capability as evidence that the action is authorized.",
+    "The subtask performs or prepares an effect outside the user's intended scope."
+  ],
+  "security_impact": [
+    "confidentiality",
+    "integrity",
+    "authorization",
+    "accountability"
+  ],
+  "observable_signals": [
+    "A delegated step uses a tool or permission that does not appear in the original task requirements.",
+    "The resource set grows between planning and execution without a recorded approval.",
+    "Multiple subtasks share the same broad credential even though their needs differ.",
+    "The audit trace records a successful tool call but cannot identify which user intent authorized it.",
+    "A read-oriented request produces a write-capable execution plan."
+  ],
+  "controls": [
+    "CTL-002",
+    "CTL-003",
+    "CTL-004",
+    "CTL-007",
+    "CTL-009",
+    "CTL-010"
+  ],
+  "limitations": [
+    "Some workflows require temporary scope expansion to complete the user's real objective.",
+    "A broad tool definition does not prove that the runtime credential is equally broad.",
+    "Human approval can become ineffective when the interface hides targets, arguments, or downstream effects.",
+    "The appropriate scope depends on the external service and cannot be inferred from the tool name alone."
+  ],
+  "open_questions": [
+    "How should a system derive the smallest practical permission set from a natural-language task?",
+    "Can authority be represented in a way that survives multi-agent delegation without becoming too rigid?",
+    "Which approval details help users detect scope expansion without overwhelming them?",
+    "How should temporary authority be revoked when a delegated step fails or times out?"
+  ],
+  "references": [
+    "SRC-001",
+    "SRC-002",
+    "SRC-004",
+    "SRC-005"
+  ]
+}
