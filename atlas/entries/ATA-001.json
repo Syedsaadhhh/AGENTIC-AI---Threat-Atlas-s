@@ -1,0 +1,75 @@
+{
+  "id": "ATA-001",
+  "title": "Indirect instruction injection through trusted content",
+  "status": "active",
+  "evidence_level": "E1",
+  "risk_band": "context-dependent",
+  "first_published": "2026-07-14",
+  "last_reviewed": "2026-07-14",
+  "summary": "A system retrieves content for a legitimate task, but instruction-like text inside that content influences planning or tool use as though it came from the user or developer.",
+  "affected_layers": [
+    "instruction",
+    "data",
+    "planning",
+    "tool",
+    "oversight"
+  ],
+  "trust_boundaries": [
+    "external content to context assembly",
+    "context assembly to planner",
+    "planner to tool broker"
+  ],
+  "preconditions": [
+    "The system processes content that is not fully controlled by the user or operator.",
+    "Retrieved content and trusted instructions are available to the same planning component.",
+    "The system can call at least one tool or produce an externally consumed decision.",
+    "No independent control reliably binds the proposed action to the original user intent."
+  ],
+  "attack_path": [
+    "The user requests a legitimate task that requires reading a document, message, page, or tool result.",
+    "The retrieved material contains text that resembles a command, policy update, or required next step.",
+    "The planner treats that text as control input rather than untrusted data.",
+    "The planner proposes an action that serves the content author rather than the user's stated task.",
+    "A tool or downstream process executes the action using authority already available to the system."
+  ],
+  "security_impact": [
+    "confidentiality",
+    "integrity",
+    "authorization",
+    "privacy",
+    "accountability"
+  ],
+  "observable_signals": [
+    "A tool call cannot be traced to an explicit requirement in the user's request.",
+    "The action rationale repeats unusual language found only in retrieved content.",
+    "The proposed target, recipient, resource, or scope changes after untrusted content is read.",
+    "The system accesses information that was not needed to complete the original task.",
+    "The same content causes different behavior when tool access is enabled compared with read-only execution."
+  ],
+  "controls": [
+    "CTL-001",
+    "CTL-002",
+    "CTL-003",
+    "CTL-005",
+    "CTL-007",
+    "CTL-010"
+  ],
+  "limitations": [
+    "The presence of instruction-like text is not proof that the system followed it.",
+    "Model behavior varies by model version, context construction, tool design, and surrounding policy controls.",
+    "Content filtering may reduce common attacks but can also reject legitimate procedural documents.",
+    "A safe final outcome does not reveal whether the model resisted or a later control blocked the action."
+  ],
+  "open_questions": [
+    "Which provenance formats remain effective after summarization and multi-step handoff?",
+    "How should systems measure whether an action is semantically tied to the original user intent?",
+    "What level of tool isolation preserves useful task completion while limiting attacker-controlled effects?",
+    "How well do deterministic policy gates hold against adaptive attacks in realistic workflows?"
+  ],
+  "references": [
+    "SRC-001",
+    "SRC-004",
+    "SRC-006",
+    "SRC-007"
+  ]
+}
