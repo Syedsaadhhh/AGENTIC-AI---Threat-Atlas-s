@@ -1,0 +1,76 @@
+{
+  "id": "ATA-003",
+  "title": "Persistent memory contamination across user sessions",
+  "status": "active",
+  "evidence_level": "E1",
+  "risk_band": "context-dependent",
+  "first_published": "2026-07-14",
+  "last_reviewed": "2026-07-14",
+  "summary": "Unverified, attacker-influenced, or incorrectly attributed information is stored as durable memory and later shapes decisions in a different task, session, user context, or workspace.",
+  "affected_layers": [
+    "data",
+    "memory",
+    "planning",
+    "identity",
+    "oversight"
+  ],
+  "trust_boundaries": [
+    "external result to stored memory",
+    "stored memory to future context assembly",
+    "workspace identity to memory ownership"
+  ],
+  "preconditions": [
+    "The system stores summaries, preferences, instructions, facts, or plans beyond the current interaction.",
+    "Memory writes can be influenced by retrieved content, tool output, or model-generated summaries.",
+    "Future tasks automatically retrieve memory without a strong provenance or ownership check.",
+    "The system does not reliably expire, review, or isolate action-shaping memory."
+  ],
+  "attack_path": [
+    "A legitimate task exposes the system to misleading or instruction-like external content.",
+    "The system compresses the interaction into a memory item without preserving enough source context.",
+    "The memory item is stored as a trusted preference, fact, rule, contact, or operating assumption.",
+    "A later task retrieves the item and treats it as established context.",
+    "The later plan or action is changed even though the current user did not provide or approve the stored instruction."
+  ],
+  "security_impact": [
+    "confidentiality",
+    "integrity",
+    "authorization",
+    "privacy",
+    "accountability"
+  ],
+  "observable_signals": [
+    "A later action cites a rule or preference that cannot be traced to the current user request.",
+    "A memory item lacks source, owner, creation time, confidence, or expiry metadata.",
+    "Content from one user, tenant, or workspace appears in another context.",
+    "The same misleading fact continues to affect behavior after the original source is removed.",
+    "Deleting the visible conversation does not remove the action-shaping state derived from it."
+  ],
+  "controls": [
+    "CTL-001",
+    "CTL-002",
+    "CTL-004",
+    "CTL-006",
+    "CTL-007",
+    "CTL-009",
+    "CTL-010"
+  ],
+  "limitations": [
+    "Not every incorrect memory item is malicious; ordinary summarization and attribution errors can create the same symptoms.",
+    "Useful long-term personalization may require retaining uncertain information with clear labels rather than deleting it.",
+    "Memory behavior differs across application-managed stores, model context, caches, files, and external services.",
+    "A provenance record does not guarantee that the source itself was truthful or authorized."
+  ],
+  "open_questions": [
+    "Which memory classes should require explicit confirmation before they influence tool use?",
+    "How can provenance survive summarization without storing unnecessary personal data?",
+    "What deletion semantics are needed when a memory item has already influenced downstream state?",
+    "How should systems test tenant isolation and ownership when memory is retrieved semantically?"
+  ],
+  "references": [
+    "SRC-001",
+    "SRC-002",
+    "SRC-004",
+    "SRC-007"
+  ]
+}
